@@ -1,6 +1,0 @@
-{
-  "name": "Rendre la Monnaie",
-  "description": "Application pédagogique de calcul mental et de rendu de monnaie pour les élèves de commerce.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
