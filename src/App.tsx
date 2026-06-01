@@ -859,7 +859,7 @@ export default function App() {
           {/* Section 5: Diagnostic / Pedagogical Level Info Panel */}
           <section className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm">
             <h3 className="font-heading font-extrabold text-sm text-slate-900 flex items-center gap-1.5 mb-2.5">
-              <Info className="w-4 h-4 text-indigo-500" /> Objectifs d'Apprentissage
+              <Info className="w-4 h-4 text-indigo-500" /> Objectifs d'apprentissage
             </h3>
             <p className="text-xs text-slate-500 leading-relaxed mb-3">
               Ce module aide les élèves à automatiser le calcul mental en situation professionnelle. Ils doivent estimer et minimiser le nombre de pièces à rendre.
