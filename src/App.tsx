@@ -1010,7 +1010,7 @@ export default function App() {
             Réalisé par F. AIGON - Enseignant Éco-Gestion pour les sections de Commerce & de Vente en formation professionnelle
           </p>
           <p className="text-[11px] text-slate-400">
-            Cette maquette présente la cinématique utilisateur finale. Les élèves sélectionnent les devises pour s'entraîner à rendre la monnaie avec retour interactif.
+            Cette permet aux élèves de s'entraîner à rendre la monnaie avec retour interactif.
           </p>
         </div>
       </footer>
