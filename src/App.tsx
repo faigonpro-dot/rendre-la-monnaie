@@ -427,7 +427,7 @@ export default function App() {
               <h1 className="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900 flex items-center gap-2">
                 Rendre la Monnaie
               </h1>
-              <p className="text-xs text-slate-500 font-medium">Point de vente virtuel & simulateur de caisse pour vos élèves</p>
+              <p className="text-xs text-slate-500 font-medium">Point de vente virtuel & simulateur de caisse</p>
             </div>
           </div>
 
