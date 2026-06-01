@@ -745,7 +745,7 @@ export default function App() {
           <section className="bg-slate-800 rounded-3xl p-5 border-4 border-slate-900 shadow-xl text-white flex flex-col gap-5">
             <div className="border-b border-slate-700 pb-3 flex items-center justify-between">
               <h3 className="font-heading font-extrabold text-base tracking-tight text-white flex items-center gap-2">
-                📂 Le Tiroir-Caisse Virtuel
+                📂 Le tiroir-caisse virtuel
               </h3>
               <span className="bg-slate-700 text-amber-400 font-mono text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">EUR (€)</span>
             </div>
