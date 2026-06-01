@@ -59,133 +59,239 @@ interface MockInvoice {
   greetingMessage: string;
 }
 
-const LEVEL_INVOICES: Record<'easy' | 'medium' | 'hard', MockInvoice[]> = {
-  easy: [
-    {
-      id: "e1",
-      customerName: "Léa, la fleuriste",
-      customerAvatar: "👩‍🌾",
-      items: [
-        { name: "Bouquet de tulipes", qty: 2, price: 6.00 },
-        { name: "Poterie artisanale", qty: 1, price: 15.00 }
-      ],
-      total: 27.00,
-      given: 50.00,
-      toReturn: 23.00,
-      greetingMessage: "Bonjour ! Vos tulipes sont magnifiques. Voici un billet de 50 € !"
-    },
-    {
-      id: "e2",
-      customerName: "Lucas, l'étudiant gourmand",
-      customerAvatar: "👨‍🎓",
-      items: [
-        { name: "Formule Midi (Sandwich + Boisson)", qty: 1, price: 8.00 },
-        { name: "Éclair au chocolat", qty: 1, price: 2.00 }
-      ],
-      total: 10.00,
-      given: 20.00,
-      toReturn: 10.00,
-      greetingMessage: "Salut ! C'était parfait pour ma pause de midi. Voici 20 €."
-    },
-    {
-      id: "e3",
-      customerName: "Monsieur Robert, le doyen du quartier",
-      customerAvatar: "👴",
-      items: [
-        { name: "Journal quotidien", qty: 1, price: 2.00 },
-        { name: "Miel de lavande", qty: 1, price: 6.00 },
-        { name: "Boîte de tisane bio", qty: 1, price: 4.00 }
-      ],
-      total: 12.00,
-      given: 15.00,
-      toReturn: 3.00,
-      greetingMessage: "Bonjour mon jeune ami ! Quel beau temps aujourd'hui. Je vous donne un billet de 10 € et un de 5 €."
+const CUSTOMERS = [
+  { name: "Léa, la fleuriste", avatar: "👩‍🌾", greeting: "Bonjour ! Vos produits ont l'air délicieux. Voici mon règlement." },
+  { name: "Lucas, l'étudiant gourmand", avatar: "👨‍🎓", greeting: "Salut ! C'est parfait pour ma pause de midi. Je vous donne ça." },
+  { name: "Monsieur Robert, le doyen du quartier", avatar: "👴", greeting: "Bonjour mon jeune ami ! Quel beau temps aujourd'hui. Voici pour vous." },
+  { name: "Sonia, la maman organisée", avatar: "👩‍👦", greeting: "Bonsoir ! Courte journée... Je vais régler avec ceci." },
+  { name: "Thomas, le sportif", avatar: "🏃‍♂️", greeting: "Bonjour ! Juste de quoi me redonner de l'énergie après ma séance." },
+  { name: "Inès, l'architecte", avatar: "👩‍🎨", greeting: "Bonjour ! J'adore votre boutique de centre-ville. Voici mon billet." },
+  { name: "Chloé, la community manager", avatar: "👩‍💻", greeting: "Hello ! Hop, un petit panier avant de retourner bosser. Merci !" },
+  { name: "Marc, le chef cuistot", avatar: "👨‍🍳", greeting: "Bonjour ! Il me manquait quelques ingrédients de toute urgence. Tenez." },
+  { name: "Amandine, l'adepte du bio", avatar: "👩‍🌾", greeting: "Bonjour, j'ai trouvé tout ce qu'il me fallait. Voici ma monnaie." },
+  { name: "Julien, l'informaticien", avatar: "👨‍💻", greeting: "Hello, je prends ça rapidement entre deux réunions. Tenez !" },
+  { name: "Camille, la navetteuse TGV", avatar: "👩‍💼", greeting: "Bonjour ! Vite, mon train part bientôt. Je règle avec ce billet." },
+  { name: "Maxime, l'artisan maçon", avatar: "👨‍🔧", greeting: "Salut ! Petite pause sur le chantier. Voici pour les achats." },
+  { name: "Mme Sophie, l'institutrice", avatar: "👩‍🏫", greeting: "Bonjour, les enfants adorent ces petits biscuits. Voici pour vous." },
+  { name: "Antoine, le jeune papa", avatar: "👨‍🍼", greeting: "Bonjour, fin de course pour la maison ! Je vous laisse faire l'appoint avec ça." },
+  { name: "Sarah, la coiffeuse", avatar: "✂️", greeting: "Coucou ! Un petit creux entre deux clients. Tenez, voilà." },
+  { name: "Mme Louise, la grand-mère", avatar: "👵", greeting: "Bonjour ma petite dame. C'est pour le goûter de mes petits-enfants. Tenez." },
+  { name: "Nicolas, le lycéen", avatar: "🎒", greeting: "Bonjour monsieur, ça sera tout pour aujourd'hui. Voilà." },
+  { name: "Élodie, l'infirmière libérale", avatar: "👩‍⚕️", greeting: "Bonjour, entre deux tournées de patients, je prends ça. Merci !" },
+  { name: "Arthur, le musicien", avatar: "🎸", greeting: "Salut l'ami, super boutique ! J'ai ça pour payer mon panier." },
+  { name: "Julie, la graphiste", avatar: "🎨", greeting: "Hello ! Le packaging de ce produit est superbe. Voici mon paiement." },
+  { name: "Pierre, le chauffeur de bus", avatar: "🚌", greeting: "Bonjour ! Juste le temps d'un café et d'un biscuit. Tenez." },
+  { name: "Mme Alice, la couturière", avatar: "🧵", greeting: "Bonjour, vous avez toujours un accueil si charmant. Voici pour vous." },
+  { name: "Paul, le jardinier", avatar: "🪵", greeting: "Salut ! Une bonne bouteille de jus après le travail. Tenez." },
+  { name: "Manon, l'étudiante en droit", avatar: "⚖️", greeting: "Bonjour, parfait pour réviser mes examens ce soir. Voici mon billet." },
+  { name: "Guillaume, le comptable", avatar: "📊", greeting: "Bonjour, l'addition est exacte, parfait ! Je vous donne ceci." },
+  { name: "Clara, la secrétaire médicale", avatar: "⌨️", greeting: "Bonjour ! Ma collegue m'a conseillé votre épicerie. Voilà pour moi." },
+  { name: "M. Henri, l'ancien boulanger", avatar: "🥖", greeting: "Bonjour ! On reconnaît les bons produits ici. Tenez, jeune homme." },
+  { name: "Laura, la prof de yoga", avatar: "🧘‍♀️", greeting: "Bonjour, des produits parfaits pour rester en forme. Voici ma monnaie." },
+  { name: "David, l'agent immobilier", avatar: "💼", greeting: "Hello ! Une signature de bail réussie, ça se fête. Je règle ça." },
+  { name: "Emma, la photographe", avatar: "📷", greeting: "Bonjour, le visuel de votre étalage donne envie ! Voici mon règlement." },
+  { name: "M. André, le pêcheur", avatar: "🎣", greeting: "Bonjour ! Une bonne journée de pêche s'annonce avec ça. Tenez." },
+  { name: "Mathilde, la vendeuse", avatar: "🛍️", greeting: "Coucou ! Rapide emplette avant l'ouverture du magasin. Voilà." },
+  { name: "Simon, le charpentier", avatar: "🪚", greeting: "Bonjour, de quoi tenir jusqu'au dîner. Voici pour le compte." },
+  { name: "Lucie, l'opticienne", avatar: "👓", greeting: "Bonjour ! J'ai une cliente dans cinq minutes, je fais vite. Tenez !" },
+  { name: "Mme Renée, la retraitée active", avatar: "🧺", greeting: "Bonjour, je prépare une bonne soupe pour ce soir. Voici mon billet." },
+  { name: "Hugo, le barman", avatar: "🍹", greeting: "Salut ! Réveil difficile, il me fallait absolument ce café. Tiens." },
+  { name: "Marine, la journaliste", avatar: "📰", greeting: "Bonjour ! Un petit en-cas avant de partir en reportage. Tenez." },
+  { name: "Benoît, le livreur à vélo", avatar: "🚴‍♂️", greeting: "Hello ! Grosse journée de livraisons, j'ai faim. Voilà pour le paiement." },
+  { name: "Chantal, la secrétaire", avatar: "🏛️", greeting: "Bonjour, la pause café administrative ! Je vous donne ceci." },
+  { name: "M. Jean, le chef de travaux", avatar: "🏗️", greeting: "Bonjour, une petite faim sur la route. Voici pour le total." }
+];
+
+const MARKET_ITEMS = [
+  { name: "Formule Midi Express", easyPrice: 8.00, complexPrice: 8.45 },
+  { name: "Éclair au chocolat", easyPrice: 2.00, complexPrice: 2.15 },
+  { name: "Journal quotidien", easyPrice: 2.00, complexPrice: 1.80 },
+  { name: "Miel de lavande local", easyPrice: 6.00, complexPrice: 6.75 },
+  { name: "Boîte de tisane bio", easyPrice: 4.00, complexPrice: 4.10 },
+  { name: "Bouquet de tulipes", easyPrice: 12.00, complexPrice: 12.50 },
+  { name: "Poterie artisanale", easyPrice: 15.00, complexPrice: 15.85 },
+  { name: "Boisson isotonique", easyPrice: 3.00, complexPrice: 2.55 },
+  { name: "Barre de céréales", easyPrice: 1.00, complexPrice: 1.25 },
+  { name: "Café pur arabica", easyPrice: 5.00, complexPrice: 4.99 },
+  { name: "Jus de pommes local", easyPrice: 3.00, complexPrice: 3.35 },
+  { name: "Baguette de tradition", easyPrice: 1.00, complexPrice: 1.30 },
+  { name: "Croissant au beurre", easyPrice: 1.00, complexPrice: 1.25 },
+  { name: "Pain au chocolat", easyPrice: 1.00, complexPrice: 1.35 },
+  { name: "Sandwich Triangle Poulet", easyPrice: 4.00, complexPrice: 3.85 },
+  { name: "Salade César Fraîche", easyPrice: 6.00, complexPrice: 6.49 },
+  { name: "Quiche Lorraine", easyPrice: 4.00, complexPrice: 4.25 },
+  { name: "Panini Tomate Mozzarella", easyPrice: 5.00, complexPrice: 5.15 },
+  { name: "Cookie aux trois chocolats", easyPrice: 2.00, complexPrice: 2.45 },
+  { name: "Muffin à la myrtille", easyPrice: 3.00, complexPrice: 2.80 },
+  { name: "Wrap Saumon Avocat", easyPrice: 5.00, complexPrice: 5.60 },
+  { name: "Barrette de fraises", easyPrice: 4.00, complexPrice: 4.19 },
+  { name: "Sac de pommes d'Alsace", easyPrice: 3.00, complexPrice: 3.45 },
+  { name: "Bananes bio", easyPrice: 2.00, complexPrice: 2.10 },
+  { name: "Ananas entier", easyPrice: 3.00, complexPrice: 2.99 },
+  { name: "Tomates cerises", easyPrice: 2.00, complexPrice: 1.89 },
+  { name: "Avocats", easyPrice: 3.00, complexPrice: 3.25 },
+  { name: "Melon charentais", easyPrice: 3.00, complexPrice: 2.85 },
+  { name: "Sachet de salade lavée", easyPrice: 2.00, complexPrice: 1.65 },
+  { name: "Concombre bio", easyPrice: 1.00, complexPrice: 1.15 },
+  { name: "Sachet de noix", easyPrice: 4.00, complexPrice: 4.35 },
+  { name: "Brique de lait demi-écrémé", easyPrice: 1.00, complexPrice: 1.12 },
+  { name: "Beurre doux", easyPrice: 3.00, complexPrice: 2.89 },
+  { name: "Pack de yaourts nature bio", easyPrice: 2.00, complexPrice: 2.35 },
+  { name: "Crème fraîche épaisse", easyPrice: 2.00, complexPrice: 1.95 },
+  { name: "Fromage Blanc", easyPrice: 3.00, complexPrice: 3.10 },
+  { name: "Œufs de plein air", easyPrice: 2.00, complexPrice: 2.45 },
+  { name: "Comté AOP affiné", easyPrice: 6.00, complexPrice: 6.85 },
+  { name: "Camembert de Normandie", easyPrice: 3.00, complexPrice: 2.75 },
+  { name: "Mozzarella di Bufala", easyPrice: 2.00, complexPrice: 2.29 },
+  { name: "Râpé spécial pizza", easyPrice: 2.00, complexPrice: 2.15 },
+  { name: "Paquet de coquillettes", easyPrice: 1.00, complexPrice: 0.95 },
+  { name: "Riz basmati parfumé", easyPrice: 2.00, complexPrice: 2.40 },
+  { name: "Sauce tomate basilic", easyPrice: 2.00, complexPrice: 1.75 },
+  { name: "Chips de sarrasin", easyPrice: 2.00, complexPrice: 2.30 },
+  { name: "Huile d'olive vierge extra", easyPrice: 8.00, complexPrice: 8.95 },
+  { name: "Moutarde de Dijon", easyPrice: 2.00, complexPrice: 1.69 },
+  { name: "Boîte de thon au naturel", easyPrice: 2.00, complexPrice: 2.15 },
+  { name: "Soupe de légumes", easyPrice: 3.00, complexPrice: 3.40 },
+  { name: "Cornichons extra-fins", easyPrice: 2.00, complexPrice: 2.25 },
+  { name: "Sel fin de Guérande", easyPrice: 1.00, complexPrice: 1.45 },
+  { name: "Tablette de chocolat noir", easyPrice: 2.00, complexPrice: 2.35 },
+  { name: "Pot de pâte à tartiner", easyPrice: 4.00, complexPrice: 4.65 },
+  { name: "Confiture de fraises", easyPrice: 4.00, complexPrice: 3.90 },
+  { name: "Biscuits sablés pur beurre", easyPrice: 2.00, complexPrice: 1.85 },
+  { name: "Paquet de bonbons fruités", easyPrice: 2.00, complexPrice: 2.10 },
+  { name: "Compotes de pommes", easyPrice: 2.00, complexPrice: 2.25 },
+  { name: "Céréales complètes", easyPrice: 4.00, complexPrice: 3.75 },
+  { name: "Galettes de riz soufflé", easyPrice: 1.00, complexPrice: 1.40 },
+  { name: "Sucre roux de canne", easyPrice: 2.00, complexPrice: 1.99 },
+  { name: "Gaufres au sucre", easyPrice: 3.00, complexPrice: 2.70 },
+  { name: "Bouteille d'eau minérale", easyPrice: 1.00, complexPrice: 0.85 },
+  { name: "Limonade artisanale", easyPrice: 3.00, complexPrice: 2.90 },
+  { name: "Soda rafraîchissant", easyPrice: 1.00, complexPrice: 1.20 },
+  { name: "Thé glacé à la pêche", easyPrice: 2.00, complexPrice: 1.75 },
+  { name: "Jus d'orange", easyPrice: 3.00, complexPrice: 2.65 },
+  { name: "Nectar de mangue", easyPrice: 3.00, complexPrice: 3.49 },
+  { name: "Café en grains", easyPrice: 6.00, complexPrice: 5.99 },
+  { name: "Infusion verveine-menthe", easyPrice: 3.00, complexPrice: 3.15 },
+  { name: "Boisson végétale amande", easyPrice: 2.00, complexPrice: 2.45 },
+  { name: "Bière sans alcool", easyPrice: 2.00, complexPrice: 2.10 }
+];
+
+function getGivenNotesAndCoins(amount: number) {
+  const denominations = [
+    { value: 100, label: "Billet 100 €" },
+    { value: 50, label: "Billet 50 €" },
+    { value: 20, label: "Billet 20 €" },
+    { value: 10, label: "Billet 10 €" },
+    { value: 5, label: "Billet 5 €" },
+    { value: 2, label: "Pièce 2 €" },
+    { value: 1, label: "Pièce 1 €" },
+  ];
+  const results = [];
+  let remaining = Math.round(amount * 100);
+  for (const denom of denominations) {
+    const valueCents = denom.value * 100;
+    while (remaining >= valueCents) {
+      results.push(denom);
+      remaining -= valueCents;
     }
-  ],
-  medium: [
-    {
-      id: "m1",
-      customerName: "Julie, l'étudiante",
-      customerAvatar: "👩‍🎓",
-      items: [
-        { name: "Formule Midi (Sandwich + Boisson)", qty: 1, price: 8.50 },
-        { name: "Cookie pépites de chocolat", qty: 1, price: 2.00 }
-      ],
-      total: 10.50,
-      given: 20.00,
-      toReturn: 9.50,
-      greetingMessage: "Salut ! C'est parfait pour ma pause de midi. Voici 20 €."
-    },
-    {
-      id: "m2",
-      customerName: "Thomas, le sportif",
-      customerAvatar: "🏃‍♂️",
-      items: [
-        { name: "Barres de céréales", qty: 2, price: 1.50 },
-        { name: "Boisson isotonique", qty: 1, price: 2.50 }
-      ],
-      total: 5.50,
-      given: 10.00,
-      toReturn: 4.50,
-      greetingMessage: "Bonjour ! Juste de quoi me redonner de l'énergie après ma séance. Voici 10 €."
-    },
-    {
-      id: "m3",
-      customerName: "Inès, l'architecte",
-      customerAvatar: "👩‍🎨",
-      items: [
-        { name: "Grand carnet de croquis", qty: 1, price: 13.20 },
-        { name: "Gomme mie de pain", qty: 1, price: 1.80 }
-      ],
-      total: 15.00,
-      given: 20.00,
-      toReturn: 5.00,
-      greetingMessage: "Bonjour ! J'adore votre rayon papeterie. Je vous donne un billet de 20 €."
+  }
+  return results;
+}
+
+function generateLevelScenarios(level: 'easy' | 'medium' | 'hard', count: number = 5): MockInvoice[] {
+  const list: MockInvoice[] = [];
+  // To avoid duplicate customers within the same active list
+  const availableCustomerIndexes = Array.from({ length: CUSTOMERS.length }, (_, i) => i);
+  
+  for (let s = 0; s < count; s++) {
+    if (availableCustomerIndexes.length === 0) {
+      for (let i = 0; i < CUSTOMERS.length; i++) {
+        availableCustomerIndexes.push(i);
+      }
     }
-  ],
-  hard: [
-    {
-      id: "h1",
-      customerName: "Léa, la fleuriste",
-      customerAvatar: "👩‍🌾",
-      items: [
-        { name: "Bouquet de tulipes", qty: 1, price: 12.50 },
-        { name: "Poterie artisanale", qty: 1, price: 15.85 }
-      ],
-      total: 28.35,
-      given: 50.00,
-      toReturn: 21.65,
-      greetingMessage: "Bonjour ! Vos tulipes sont magnifiques. Voici un billet de 50 € !"
-    },
-    {
-      id: "h2",
-      customerName: "Monsieur Robert, le doyen du quartier",
-      customerAvatar: "👴",
-      items: [
-        { name: "Journal quotidien", qty: 1, price: 1.80 },
-        { name: "Miel de lavande", qty: 1, price: 6.75 },
-        { name: "Boîte de tisane bio", qty: 1, price: 4.10 }
-      ],
-      total: 12.65,
-      given: 15.00,
-      toReturn: 2.35,
-      greetingMessage: "Bonjour mon jeune ami ! Quel beau temps aujourd'hui. Je vous donne un billet de 10 € et un de 5 €."
-    },
-    {
-      id: "h3",
-      customerName: "Sonia, la maman organisée",
-      customerAvatar: "👩‍👦",
-      items: [
-        { name: "Paquet de couches bio", qty: 1, price: 16.49 },
-        { name: "Lingettes écologiques", qty: 2, price: 2.10 }
-      ],
-      total: 20.69,
-      given: 30.00,
-      toReturn: 9.31,
-      greetingMessage: "Bonsoir ! Courte journée... Je vais régler avec ces billets de 20 € et 10 €."
+    const randIndex = Math.floor(Math.random() * availableCustomerIndexes.length);
+    const customerIndex = availableCustomerIndexes.splice(randIndex, 1)[0];
+    const customer = CUSTOMERS[customerIndex];
+    
+    // Pick dynamic items based on level
+    const itemCount = level === 'easy' 
+      ? Math.floor(Math.random() * 2) + 1 
+      : level === 'medium'
+      ? Math.floor(Math.random() * 2) + 2
+      : Math.floor(Math.random() * 2) + 3;
+
+    const selectedItems: { name: string; qty: number; price: number }[] = [];
+    const itemPool = [...MARKET_ITEMS];
+    
+    for (let i = 0; i < itemCount; i++) {
+      if (itemPool.length === 0) break;
+      const index = Math.floor(Math.random() * itemPool.length);
+      const item = itemPool.splice(index, 1)[0];
+      
+      const qty = Math.random() > 0.75 
+        ? (level === 'easy' ? 2 : Math.floor(Math.random() * 2) + 2) 
+        : 1;
+      
+      let price = 0;
+      if (level === 'easy') {
+        price = item.easyPrice;
+      } else if (level === 'medium') {
+        // Round to nearest 10 cents for "centimes simples"
+        price = Math.round(item.complexPrice * 10) / 10;
+      } else {
+        price = item.complexPrice;
+      }
+      
+      selectedItems.push({ name: item.name, qty, price });
     }
-  ]
-};
+    
+    const total = selectedItems.reduce((acc, current) => acc + (current.price * current.qty), 0);
+    const roundedTotal = Math.round(total * 100) / 100;
+    
+    let given = 0;
+    if (roundedTotal < 5) {
+      given = Math.random() > 0.5 ? 5 : 10;
+    } else if (roundedTotal < 10) {
+      given = Math.random() > 0.4 ? 10 : 20;
+    } else if (roundedTotal < 20) {
+      given = Math.random() > 0.3 ? 20 : 50;
+    } else if (roundedTotal < 50) {
+      given = 50;
+    } else if (roundedTotal < 100) {
+      given = 100;
+    } else {
+      given = Math.ceil(roundedTotal / 50) * 50;
+    }
+    
+    const toReturn = Math.round((given - roundedTotal) * 100) / 100;
+    
+    let givenText = `${given} €`;
+    if (given === 15) givenText = "un billet de 10 € et un de 5 €";
+    else if (given === 30) givenText = "un billet de 20 € et un de 10 €";
+    else if (given === 60) givenText = "un billet de 50 € et un de 10 €";
+    else if (given === 70) givenText = "un billet de 50 € et un de 20 €";
+    else if (given === 100) givenText = "un billet de 100 €";
+    else if (given === 50) givenText = "un billet de 50 €";
+    else if (given === 20) givenText = "un billet de 20 €";
+    else if (given === 10) givenText = "un billet de 10 €";
+    else if (given === 5) givenText = "un billet de 5 €";
+    
+    const greetingMessage = `${customer.greeting} Voici ${givenText}.`;
+    
+    list.push({
+      id: `${level}_${s}_${Date.now()}`,
+      customerName: customer.name,
+      customerAvatar: customer.avatar,
+      items: selectedItems,
+      total: roundedTotal,
+      given,
+      toReturn,
+      greetingMessage
+    });
+  }
+  
+  return list;
+}
 
 function getOptimalChange(amount: number): string[] {
   const values = [
@@ -222,14 +328,31 @@ export default function App() {
   const [maxSolvedScenarioIndex, setMaxSolvedScenarioIndex] = useState<number>(0);
   const [renderedMoney, setRenderedMoney] = useState<{ item: MoneyItem; count: number }[]>([]);
   const [level, setLevel] = useState<'easy' | 'medium' | 'hard'>('easy');
+  const [activeScenarios, setActiveScenarios] = useState<MockInvoice[]>(() => generateLevelScenarios('easy', 5));
   const [showValidationPopup, setShowValidationPopup] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  const activeScenarios = LEVEL_INVOICES[level];
-  const activeScenario = activeScenarios[currentScenarioIndex];
+  const activeScenario = activeScenarios[currentScenarioIndex] || {
+    id: "none",
+    customerName: "",
+    customerAvatar: "🤷",
+    items: [],
+    total: 0,
+    given: 0,
+    toReturn: 0,
+    greetingMessage: ""
+  };
 
   const handleSetLevel = (newLevel: 'easy' | 'medium' | 'hard') => {
     setLevel(newLevel);
+    setActiveScenarios(generateLevelScenarios(newLevel, 5));
+    setCurrentScenarioIndex(0);
+    setMaxSolvedScenarioIndex(0);
+    handleClearTray();
+  };
+
+  const handleRegenerateScenarios = () => {
+    setActiveScenarios(generateLevelScenarios(level, 5));
     setCurrentScenarioIndex(0);
     setMaxSolvedScenarioIndex(0);
     handleClearTray();
@@ -315,7 +438,7 @@ export default function App() {
             </span>
             <button 
               onClick={() => handleSetLevel('easy')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 level === 'easy' 
                   ? 'bg-emerald-500 text-white shadow-sm' 
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -325,7 +448,7 @@ export default function App() {
             </button>
             <button 
               onClick={() => handleSetLevel('medium')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 level === 'medium' 
                   ? 'bg-amber-500 text-white shadow-sm' 
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -335,13 +458,20 @@ export default function App() {
             </button>
             <button 
               onClick={() => handleSetLevel('hard')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 level === 'hard' 
                   ? 'bg-red-500 text-white shadow-sm' 
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
               🔴 Difficile (Tous cas)
+            </button>
+            <button 
+              onClick={handleRegenerateScenarios}
+              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-600 hover:bg-indigo-100 transition-all flex items-center gap-1 border border-indigo-200 cursor-pointer"
+              title="Générer un tout nouveau groupe d'exercices aléatoires pour ce niveau"
+            >
+              🔄 Mélanger / Nouveaux Exercices
             </button>
           </div>
 
@@ -420,27 +550,24 @@ export default function App() {
                 </div>
 
                 {/* Hand of customer showing holding visual cash given */}
-                <div className="mt-5 bg-white/5 border border-white/10 rounded-2xl p-3 flex items-center gap-3 w-fit">
+                <div className="mt-5 bg-white/5 border border-white/10 rounded-2xl p-3 flex flex-wrap items-center gap-3 w-fit z-10 relative">
                   <span className="text-xs font-bold text-slate-300">Donné par le client :</span>
-                  <div className="flex gap-1.5">
-                    {activeScenario.given === 50 ? (
-                      <span className="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-md font-extrabold border-l-4 border-amber-500 shadow-sm animate-pulse-slow">
-                        Billet de 50 € 💵
+                  <div className="flex flex-wrap gap-1.5">
+                    {getGivenNotesAndCoins(activeScenario.given).map((item, idx) => (
+                      <span 
+                        key={idx} 
+                        className={`text-xs px-2.5 py-1 rounded-md font-extrabold border-l-4 shadow-sm flex items-center gap-1 ${
+                          item.value === 100 ? 'bg-purple-100 text-purple-800 border-purple-500' :
+                          item.value === 50 ? 'bg-amber-100 text-amber-800 border-amber-500 animate-pulse-slow' :
+                          item.value === 20 ? 'bg-sky-100 text-sky-800 border-sky-500 animate-pulse-slow' :
+                          item.value === 10 ? 'bg-rose-100 text-rose-800 border-rose-500' :
+                          item.value === 5 ? 'bg-emerald-100 text-emerald-800 border-emerald-500' :
+                          'bg-slate-200 text-slate-800 border-slate-400'
+                        }`}
+                      >
+                        {item.label} {item.value >= 5 ? "💵" : "🪙"}
                       </span>
-                    ) : activeScenario.given === 20 ? (
-                      <span className="bg-sky-100 text-sky-800 text-xs px-2.5 py-1 rounded-md font-extrabold border-l-4 border-sky-500 shadow-sm animate-pulse-slow">
-                        Billet de 20 € 💵
-                      </span>
-                    ) : (
-                      <div className="flex gap-1">
-                        <span className="bg-red-100 text-red-800 text-xs px-2.5 py-1 rounded-md font-extrabold border-l-4 border-red-500 shadow-sm">
-                          Billet de 10 € 💵
-                        </span>
-                        <span className="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-md font-extrabold border-l-4 border-emerald-500 shadow-sm">
-                          Billet de 5 € 💵
-                        </span>
-                      </div>
-                    )}
+                    ))}
                   </div>
                 </div>
 
