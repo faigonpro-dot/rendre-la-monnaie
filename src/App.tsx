@@ -425,7 +425,7 @@ export default function App() {
             </div>
             <div>
               <h1 className="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900 flex items-center gap-2">
-                Rendre la Monnaie <span className="bg-indigo-100 text-indigo-700 font-sans text-xs px-2.5 py-1 rounded-full font-bold">Maquette Pédagogique UX</span>
+                Rendre la Monnaie
               </h1>
               <p className="text-xs text-slate-500 font-medium">Point de vente virtuel & simulateur de caisse pour vos élèves</p>
             </div>
