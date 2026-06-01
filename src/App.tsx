@@ -875,7 +875,7 @@ export default function App() {
               <div className="flex bg-slate-50 p-2.5 rounded-xl border border-slate-100 items-start gap-2">
                 <span className="text-base select-none">🎯</span>
                 <div>
-                  <h4 className="font-bold text-slate-800">Rendu Optimal</h4>
+                  <h4 className="font-bold text-slate-800">Rendu optimal</h4>
                   <p className="text-slate-500 text-[11px]">Favoriser les pièces de grande valeur pour rendre le moins d'objets possible.</p>
                 </div>
               </div>
