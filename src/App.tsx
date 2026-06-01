@@ -657,7 +657,7 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <div className="bg-red-500 text-white p-1.5 rounded-lg text-xs font-bold">Plateau</div>
                 <h3 className="font-heading font-extrabold text-sm text-slate-800">
-                  Plateau de Monnaie à Rendre
+                  Plateau de monnaie à rendre
                 </h3>
               </div>
               <div className="flex gap-2">
