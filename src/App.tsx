@@ -868,7 +868,7 @@ export default function App() {
               <div className="flex bg-slate-50 p-2.5 rounded-xl border border-slate-100 items-start gap-2">
                 <span className="text-base select-none">🧮</span>
                 <div>
-                  <h4 className="font-bold text-slate-800">Calcul d'Écart</h4>
+                  <h4 className="font-bold text-slate-800">Calcul d'écart</h4>
                   <p className="text-slate-500 text-[11px]">Savoir soustraire le total de l'achat de la somme donnée par le client.</p>
                 </div>
               </div>
