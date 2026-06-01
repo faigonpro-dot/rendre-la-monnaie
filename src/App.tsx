@@ -1007,7 +1007,7 @@ export default function App() {
       <footer className="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-400">
         <div className="max-w-7xl mx-auto px-4 space-y-2">
           <p className="flex items-center justify-center gap-1 font-bold text-slate-500">
-            Fait avec <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> pour les Écoles de Commerce & de Vente
+            Réalisé par F. AIGON - Enseignant Éco-Gestion pour les sections de Commerce & de Vente en formation professionnelle
           </p>
           <p className="text-[11px] text-slate-400">
             Cette maquette présente la cinématique utilisateur finale. Les élèves sélectionnent les devises pour s'entraîner à rendre la monnaie avec retour interactif.
